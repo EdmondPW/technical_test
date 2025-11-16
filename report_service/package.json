@@ -7,8 +7,8 @@
     "dev:worker": "tsx --watch ./src/worker.ts",
     "dev:dailyRun": "tsx --watch ./src/dailyRun.ts",
     "build": "tsc",
-    "start:worker": "node dist/worker.js",
-    "start:dailyRun": "node dist/dailyRun.js",
+    "start:worker": "node dist/src/worker.js",
+    "start:dailyRun": "node dist/src/dailyRun.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -23,6 +23,7 @@
   "devDependencies": {
     "@tsconfig/node22": "^22.0.3",
     "@types/pg": "^8.15.6",
+    "drizzle-kit": "^0.31.7",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3"
   }

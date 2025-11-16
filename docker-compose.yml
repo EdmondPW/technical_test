@@ -1,0 +1,77 @@
+services:
+  api:
+    build: ./backend/
+    container_name: attendance-api
+    restart: always
+    ports:
+      - "3002:3002"
+      - "3001:3001"
+    environment:
+      PORT: 3002
+      DOCUMENTATION_PORT: 3001
+      DATABASE_URL: postgres://postgres:admin@postgres:5432/attendance-database
+      REDIS_URL: redis://redis:6379
+      NODE_ENV: production
+      JWT_SECRET: your-super-secret-access
+      JWT_EXPIRES_IN: 30m
+      BCRYPT_SALT_ROUNDS: 12
+    depends_on:
+      - postgres
+      - redis
+
+  report_service:
+    build:
+      context: ./report_service
+      dockerfile: Dockerfile
+      container_name: attendance-report-service
+      restart: always
+      ports:
+        - "3003:3003"
+    environment:
+      DATABASE_URL: postgres://postgres:admin@postgres:5432/attendance-database
+      REDIS_URL: redis://redis:6379
+      NODE_ENV: production
+      PORT: 3003
+    depends_on:
+      - postgres
+      - redis
+
+  absent_service:
+    build:
+      context: ./report_service
+      dockerfile: Dockerfile.routine
+      container_name: absent-report-service
+      restart: always
+      ports:
+        - "3004:3004"
+    environment:
+      DATABASE_URL: postgres://postgres:admin@postgres:5432/attendance-database
+      REDIS_URL: redis://redis:6379
+      NODE_ENV: production
+      PORT: 3004
+    depends_on:
+      - postgres
+      - redis
+
+  postgres:
+    image: postgres:16
+    container_name: attendance-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: attendance-database
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:latest
+    container_name: attendance-redis
+    restart: always
+    ports:
+      - "6379:6379"
+
+volumes:
+  pgdata:
