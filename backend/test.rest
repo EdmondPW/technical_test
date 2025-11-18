@@ -43,8 +43,14 @@ Content-Type: application/json
   "checkOutTime":"2025-11-16 3:18:0"
 }
 ###
-
 GET http://localhost:3002/api/v1/summary/get-summary
+Authorization: Bearer {{token}}
+
+###
+GET http://localhost:3002/api/v1/attendance-list/3/list
+Authorization: Bearer {{token}}
+###
+GET http://localhost:3002/api/v1/attendance/today
 Authorization: Bearer {{token}}
 
 ###

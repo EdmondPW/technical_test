@@ -28,8 +28,7 @@ export const checkOutController = async (
         userId: input.userId,
         attendanceId: input.attendanceId,
       });
-      console.log("result is ok.");
-      console.log(result);
+      console.log(job);
       await attendanceQueue.close();
       res.status(StatusCodes.ACCEPTED).json(result);
     } else {

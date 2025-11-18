@@ -1,3 +1,10 @@
+import type { AttendanceResponse } from '@/types/attendance_response_type'
+
+type Resonse = {
+  success: boolean
+  data: AttendanceResponse[]
+}
+
 export async function handleGetTodaysAttendance(token: string) {
   const resp = await fetch('http://localhost:3002/api/v1/attendance/today', {
     method: 'GET',
@@ -12,5 +19,5 @@ export async function handleGetTodaysAttendance(token: string) {
     throw new Error(`Failed to get today's attendance: ${err}`)
   }
 
-  return await resp.json()
+  return (await resp.json()) as Resonse
 }

@@ -1,4 +1,4 @@
-import type { AttendanceListCheckOutInput } from '@/types/attendanceInputType'
+import type { AttendanceListCheckOutInput } from '@/types/attendance_checkin_input_type'
 import { postJSON } from '@/utils/postJson'
 
 export async function checkOut(

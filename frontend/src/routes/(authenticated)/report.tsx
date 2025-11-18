@@ -1,4 +1,7 @@
-import AttendanceSummaryTable from '@/components/AttendanceSummaryTable'
+import { handleGetSummary } from '@/api/handle_summary'
+import AttendanceSummaryTable from '@/components/attendance_summary_table'
+import { useAuthStore } from '@/state/auth.state'
+import { useQuery } from '@tanstack/react-query'
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/(authenticated)/report')({
@@ -8,6 +11,16 @@ export const Route = createFileRoute('/(authenticated)/report')({
 function report() {
   const navigate = useNavigate()
 
+  const token = useAuthStore((s) => s.token) || ''
+  const { data } = useQuery({
+    queryKey: ['summary'],
+    queryFn: () => handleGetSummary(token),
+  })
+
+  console.log(data?.data)
+
+  const tableData = data?.data || []
+
   const handleReportLink = () => {
     navigate({ to: '/report' })
   }
@@ -15,6 +28,7 @@ function report() {
   const handleAttendanceLink = () => {
     navigate({ to: '/check_attendance' })
   }
+
   return (
     <>
       <div className="w-screen h-screen flex flex-col items-center bg-[#D3DAD9] px-2">
@@ -39,7 +53,7 @@ function report() {
           </div>
         </div>
         <p className="text-5xl mt-12">Summary</p>
-        <AttendanceSummaryTable summaries={[]} className={'mt-5'} />
+        <AttendanceSummaryTable summaries={[...tableData]} className={'mt-5'} />
       </div>
     </>
   )

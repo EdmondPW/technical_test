@@ -77,13 +77,13 @@ export const handleEvent = async (event: {
       }`
     );
     // EdmondPW: if employee check in early or at the correct time
-    if (attendanceData[0].checkOutTime > attendanceListData[0].checkOutTime) {
+    if (attendanceData[0].checkOutTime < attendanceListData[0].checkOutTime) {
       await db
         .update(attendanceList)
         .set({ attendanceStatus: "early_leave" })
         .where(eq(attendanceList.id, attendanceListData[0].id));
       summaryData[0].earlyLeave += 1;
-    } // EdmondPW: if employee check Outfter the attendance check in time
+    } // EdmondPW: if employee check Out after the attendance check in time
   }
 
   // EdmondPW: update summary data
@@ -116,7 +116,7 @@ export const markAbsenteesAndUpdateSummary = async () => {
       .limit(1);
 
     allAttendanceToday.forEach(async (att) => {
-      if (att.checkInTime == null) {
+      if (att.checkInTime == null && attData[0].checkOutTime < new Date(now)) {
         await db
           .update(attendanceList)
           .set({ attendanceStatus: "absent" })

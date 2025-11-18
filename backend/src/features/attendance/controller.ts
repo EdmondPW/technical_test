@@ -26,6 +26,8 @@ export async function getTodayAttendanceController(
   res: Response
 ) {
   try {
+    // const today = new Date().toISOString().split("T")[0];
+
     const data = await getTodayAttendance();
     return res.status(200).json({
       success: true,

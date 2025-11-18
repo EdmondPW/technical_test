@@ -2,7 +2,7 @@ import { z } from "zod";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { users } from "../db/schema/users.schema";
 import { roles } from "../db/schema/roles.schema";
-import { userRole } from "../db/schema/userRole.schema";
+import { userRole } from "../db/schema/user_role.schema";
 import { attendance } from "../db/schema/attendance.schema";
 import { attendanceList } from "../db/schema/attendance_list.schema";
 import { summary } from "../db/schema/summary.schema";

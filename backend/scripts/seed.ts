@@ -2,10 +2,11 @@ import { db } from "../src/db"; // adjust path
 import { eq } from "drizzle-orm";
 import { roles } from "../src/db/schema/roles.schema";
 import { users } from "../src/db/schema/users.schema";
-import { userRole } from "../src/db/schema/userRole.schema";
+import { userRole } from "../src/db/schema/user_role.schema";
 import { attendance } from "../src/db/schema/attendance.schema";
 import { randomUUID } from "crypto";
 import { attendanceList } from "../src/db/schema/attendance_list.schema";
+import { hashPassword } from "../src/utils/auth_password";
 
 async function seed() {
   // EdmondPW: jika tidak ada role admin dan user di database, tambahkan ke database
@@ -29,8 +30,8 @@ async function seed() {
   // )[0];
 
   // // masukan admin ke database jika tidak ada.
-  // const adminUserName = "admin";
-  // const password = "admin123";
+  // const adminUserName = "admin1";
+  // const password = await hashPassword("admin123");
 
   // let adminUser = (
   //   await db.select().from(users).where(eq(users.name, adminUserName)).limit(1)
@@ -40,7 +41,7 @@ async function seed() {
   //   adminUser = (
   //     await db
   //       .insert(users)
-  //       .values({ id: randomUUID(), name: adminUserName, password })
+  //       .values({ name: adminUserName, password: password })
   //       .returning()
   //   )[0];
   //   console.log("Inserted admin user");

@@ -13,6 +13,7 @@ import { Route as authenticatedRouteRouteImport } from './routes/(authenticated)
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as authenticatedReportRouteImport } from './routes/(authenticated)/report'
 import { Route as authenticatedCheck_attendanceRouteImport } from './routes/(authenticated)/check_attendance'
+import { Route as authenticatedReport_detailIdRouteImport } from './routes/(authenticated)/report_detail.$id'
 
 const authenticatedRouteRoute = authenticatedRouteRouteImport.update({
   id: '/(authenticated)',
@@ -34,16 +35,24 @@ const authenticatedCheck_attendanceRoute =
     path: '/check_attendance',
     getParentRoute: () => authenticatedRouteRoute,
   } as any)
+const authenticatedReport_detailIdRoute =
+  authenticatedReport_detailIdRouteImport.update({
+    id: '/report_detail/$id',
+    path: '/report_detail/$id',
+    getParentRoute: () => authenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/check_attendance': typeof authenticatedCheck_attendanceRoute
   '/report': typeof authenticatedReportRoute
+  '/report_detail/$id': typeof authenticatedReport_detailIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/check_attendance': typeof authenticatedCheck_attendanceRoute
   '/report': typeof authenticatedReportRoute
+  '/report_detail/$id': typeof authenticatedReport_detailIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -51,18 +60,20 @@ export interface FileRoutesById {
   '/(authenticated)': typeof authenticatedRouteRouteWithChildren
   '/(authenticated)/check_attendance': typeof authenticatedCheck_attendanceRoute
   '/(authenticated)/report': typeof authenticatedReportRoute
+  '/(authenticated)/report_detail/$id': typeof authenticatedReport_detailIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/check_attendance' | '/report'
+  fullPaths: '/' | '/check_attendance' | '/report' | '/report_detail/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/check_attendance' | '/report'
+  to: '/' | '/check_attendance' | '/report' | '/report_detail/$id'
   id:
     | '__root__'
     | '/'
     | '/(authenticated)'
     | '/(authenticated)/check_attendance'
     | '/(authenticated)/report'
+    | '/(authenticated)/report_detail/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -100,17 +111,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authenticatedCheck_attendanceRouteImport
       parentRoute: typeof authenticatedRouteRoute
     }
+    '/(authenticated)/report_detail/$id': {
+      id: '/(authenticated)/report_detail/$id'
+      path: '/report_detail/$id'
+      fullPath: '/report_detail/$id'
+      preLoaderRoute: typeof authenticatedReport_detailIdRouteImport
+      parentRoute: typeof authenticatedRouteRoute
+    }
   }
 }
 
 interface authenticatedRouteRouteChildren {
   authenticatedCheck_attendanceRoute: typeof authenticatedCheck_attendanceRoute
   authenticatedReportRoute: typeof authenticatedReportRoute
+  authenticatedReport_detailIdRoute: typeof authenticatedReport_detailIdRoute
 }
 
 const authenticatedRouteRouteChildren: authenticatedRouteRouteChildren = {
   authenticatedCheck_attendanceRoute: authenticatedCheck_attendanceRoute,
   authenticatedReportRoute: authenticatedReportRoute,
+  authenticatedReport_detailIdRoute: authenticatedReport_detailIdRoute,
 }
 
 const authenticatedRouteRouteWithChildren =

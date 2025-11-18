@@ -3,7 +3,7 @@ import { UserInput } from "./schema.zod";
 import { db } from "../../db";
 import { users } from "../../db/schema/users.schema";
 import { signToken } from "../../utils/auth_token";
-import { userRole } from "../../db/schema/userRole.schema";
+import { userRole } from "../../db/schema/user_role.schema";
 import { eq } from "drizzle-orm";
 import { roles } from "../../db/schema/roles.schema";
 

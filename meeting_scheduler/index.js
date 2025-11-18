@@ -1,9 +1,11 @@
 const meeting = [
   { id: 1, start: "09:00", end: "10:30" },
   { id: 2, start: "09:45", end: "11:00" },
-  { id: 3, start: "10:40", end: "12:00" },
   { id: 4, start: "13:00", end: "14:00" },
+  { id: 3, start: "10:40", end: "12:00" },
 ];
+
+const roomMeet = [{ roomA: [1, 4] }, { roomB: [2] }, { roomC: [3] }];
 
 function countMaxMeet() {
   const sortedMeet = meeting.toSorted((a, b) => {

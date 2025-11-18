@@ -1,4 +1,11 @@
 services:
+  frontend:
+    build: ./frontend
+    container: attendance-frontend
+    restart: always
+    depends_on:
+      - api
+
   api:
     build: ./backend/
     container_name: attendance-api
